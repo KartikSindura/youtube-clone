@@ -61,7 +61,9 @@ export const insertWatched = async (videoId) => {
 
 export const getSearchHistory = async () => {
   try {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
     if (!user) {
       return [];
@@ -73,13 +75,25 @@ export const getSearchHistory = async () => {
       .eq("user_id", user.id);
 
     if (error) throw error;
-    
+
     return data || [];
   } catch (error) {
     console.error("Error getting search history:", error.message);
     throw error;
   }
 };
+
+// export const getAdditionalMetaData = async () => {
+
+//   try {
+//     const { data, error } = await supabase
+//       .from("auth.users")
+//       .select("raw_user_meta_data")
+//       .eq("id", user.id);
+//   } catch (error) {
+//     console.error("Error insreting into profile:", error.message);
+//   }
+// };
 
 AppState.addEventListener("change", (state) => {
   if (state === "active") {

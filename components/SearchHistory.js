@@ -67,7 +67,7 @@ export default function SearchHistory() {
           keyExtractor={(item) => item.search_id.toString()}
         />
       ) : (
-        <View>
+        <View className="items-center justify-center p-5">
           <Text className="text-white">No search history</Text>
         </View>
       )}

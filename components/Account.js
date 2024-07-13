@@ -1,95 +1,94 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabase";
 import { StyleSheet, View, Alert, Image, Text, Pressable } from "react-native";
-import { Button, Input } from "@rneui/themed";
-import { Session } from "@supabase/supabase-js";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { themecolors } from "../theme/themecolors";
+import { SvgXml } from "react-native-svg";
 
-export default function Account({ session }) {
+export default function Account() {
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
-  const [website, setWebsite] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState(require("../assets/ayano2.jpeg"));
+  const [email, setEmail] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState();
 
   useEffect(() => {
-    if (session) getProfile();
-  }, [session]);
+    getProfile();
+  }, []);
 
   async function getProfile() {
     try {
       setLoading(true);
-      if (!session?.user) throw new Error("No user on the session!");
-
-      const { data, error, status } = await supabase
-        .from("profiles")
-        .select(`username, website`) // avatar_url
-        .eq("id", session?.user.id)
-        .single();
-      if (error && status !== 406) {
-        throw error;
-      }
-
-      if (data) {
-        setUsername(data.username);
-        setWebsite(data.website);
-        // setAvatarUrl(data.avatar_url);
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      // console.log(user.user_metadata)
+      if (user.user_metadata) {
+        setUsername(user.user_metadata.username);
+        setEmail(user.user_metadata.email);
+        setAvatarUrl(user.user_metadata.avatarurl);
       }
     } catch (error) {
-      if (error instanceof Error) {
-        Alert.alert(error.message);
-      }
+      console.error(error);
     } finally {
       setLoading(false);
     }
   }
 
-  async function updateProfile({ username, website }) {
-    // avatar_url
-    try {
-      setLoading(true);
-      if (!session?.user) throw new Error("No user on the session!");
-
-      const updates = {
-        id: session?.user.id,
-        username,
-        website,
-        // avatar_url,
-        updated_at: new Date(),
-      };
-
-      const { error } = await supabase.from("profiles").upsert(updates);
-
-      if (error) {
-        throw error;
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        Alert.alert(error.message);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }
   return (
-    <SafeAreaView
-      style={{ backgroundColor: themecolors.bg }}
-      className="flex-1"
-    >
-      <View className="p-3">
-        <Image source={avatarUrl} className="rounded-full h-20 w-20" />
-        <Text className="text-white text-lg font-bold">{username}</Text>
-      </View>
-      <View>
-        <Pressable
-          className="items-center p-3 rounded-lg"
-          onPress={() => supabase.auth.signOut()}
-          style={{backgroundColor: themecolors.categories}}
+    <View style={{ backgroundColor: themecolors.bg }} className="flex-1">
+      {loading ? (
+        <SafeAreaView>
+          <View className="p-3 flex-row items-center space-x-3">
+            {/* <Image source={avatarUrl} className="rounded-full h-20 w-20" /> */}
+            <View className="rounded-full h-20 w-20 bg-zinc-800"></View>
+            <View>
+              <Text className="text-white text-2xl font-bold bg-zinc-800 rounded-xl"></Text>
+              <Text className="text-zinc-400 text-xs bg-zinc-800 rounded-e-xl"></Text>
+            </View>
+          </View>
+          <View>
+            <Text className="text-white"></Text>
+          </View>
+          <View className="p-3">
+            <Pressable
+              className="items-center p-3 rounded-lg"
+              onPress={() => supabase.auth.signOut()}
+              style={{ backgroundColor: themecolors.categories }}
+            >
+              <Text className="text-white">Sign out</Text>
+            </Pressable>
+          </View>
+        </SafeAreaView>
+      ) : (
+        <SafeAreaView
+          style={{ backgroundColor: themecolors.bg }}
+          className="flex-1"
         >
-          <Text className="text-white font-semibold text-lg">Sign out</Text>
-        </Pressable>
-      </View>
-    </SafeAreaView>
+          <View className="p-3 flex-row items-center space-x-3">
+            {/* <Image source={avatarUrl} className="rounded-full h-20 w-20" /> */}
+            <View className="rounded-full h-20 w-20 bg-[#b6e3f4]">
+              <SvgXml xml={avatarUrl} />
+            </View>
+            <View>
+              <Text className="text-white text-2xl font-bold">{username}</Text>
+              <Text className="text-zinc-400 text-xs">{email}</Text>
+            </View>
+          </View>
+          <View>
+            <Text className="text-white"></Text>
+          </View>
+          <View className="p-3">
+            <Pressable
+              className="items-center p-3 rounded-lg"
+              onPress={() => supabase.auth.signOut()}
+              style={{ backgroundColor: themecolors.categories }}
+            >
+              <Text className="text-white">Sign out</Text>
+            </Pressable>
+          </View>
+        </SafeAreaView>
+      )}
+    </View>
   );
 }
 

@@ -7,9 +7,11 @@ import {
   Pressable,
   Text,
 } from "react-native";
-import { supabase } from "../utils/supabase";
+import { updateNewProfile, supabase } from "../utils/supabase";
 import { Input } from "@rneui/themed";
 import { themecolors } from "../theme/themecolors";
+import { createAvatar } from "@dicebear/core";
+import { lorelei } from "@dicebear/collection";
 
 // Tells Supabase Auth to continuously refresh the session automatically if
 // the app is in the foreground. When this is added, you will continue to receive
@@ -27,8 +29,17 @@ export default function Auth() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  // const [avatar_url, setAvatarUrl] = useState();
   const [loading, setLoading] = useState(false);
   const [signUpInstead, setSignUpInstead] = useState(false);
+
+  const makeAvatar = () => {
+    const avatar = createAvatar(lorelei, {
+      seed: Math.random().toString(36).slice(2, 7),
+      // ... other options
+    }).toString();
+    return avatar
+  };
 
   async function signInWithEmail() {
     setLoading(true);
@@ -43,6 +54,7 @@ export default function Auth() {
 
   async function signUpWithEmail() {
     setLoading(true);
+    const avatar_url = makeAvatar();
     const {
       data: { session },
       error,
@@ -52,6 +64,7 @@ export default function Auth() {
       options: {
         data: {
           username: username,
+          avatarurl: avatar_url,
         },
       },
     });
@@ -61,17 +74,6 @@ export default function Auth() {
     // if (!session) Alert.alert('Please check your inbox for email verification!')
     setLoading(false);
   }
-
-  // const insertProfile = async () => {
-  //   const {
-  //     error,
-  //     data: { session },
-  //   } = await supabase.from("profiles").insert({
-  //     username: username,
-  //     avatar_url: require("../assets/ayano2.jpeg"),
-  //   });
-  //   if (error) Alert.alert(error.message);
-  // };
 
   return (
     <View className="flex-1">
@@ -115,7 +117,9 @@ export default function Auth() {
           <View style={styles.verticallySpaced} className="p-3">
             <Pressable
               disabled={loading}
-              onPress={() => signUpWithEmail()}
+              onPress={async () => {
+                signUpWithEmail();
+              }}
               style={{ backgroundColor: themecolors.categories }}
               className="items-center p-3 rounded-lg"
             >

@@ -71,7 +71,6 @@ export default function Searchscreen({ navigation }) {
         </ScrollView>
       );
     }
-    console.log("show");
     return <SearchHistory />;
   };
 
