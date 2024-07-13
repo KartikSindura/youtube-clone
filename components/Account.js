@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../utils/supabase";
-import { StyleSheet, View, Alert, Image, Text, Pressable } from "react-native";
+import {  View, Text, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { themecolors } from "../theme/themecolors";
 import { SvgXml } from "react-native-svg";

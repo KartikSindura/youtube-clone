@@ -17,7 +17,6 @@ import Video from "../components/Video";
 import { fetchSuggestedVideos } from "../api/youtube";
 import Loading from "../components/Loading";
 import Categories from "../components/Categories";
-import Player from "../components/Player";
 import { toggleApi } from "../utils/toggleApis";
 
 export default function Homescreen({ navigation }) {

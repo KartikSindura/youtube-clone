@@ -7,7 +7,7 @@ import {
   Pressable,
   Text,
 } from "react-native";
-import { updateNewProfile, supabase } from "../utils/supabase";
+import { supabase } from "../utils/supabase";
 import { Input } from "@rneui/themed";
 import { themecolors } from "../theme/themecolors";
 import { createAvatar } from "@dicebear/core";

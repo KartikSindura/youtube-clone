@@ -2,15 +2,14 @@ import { View, TextInput, Pressable, Text, ScrollView } from "react-native";
 import React, { useRef, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useFocusEffect } from "@react-navigation/native";
 import { themecolors } from "../theme/themecolors";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { dummy, dummy_search } from "../const";
+import { dummy_search } from "../const";
 import Video from "../components/Video";
 import Loading from "../components/Loading";
 import { fetchSearchedVideos } from "../api/youtube";
 import { toggleApi } from "../utils/toggleApis";
-import { insertSearch, supabase } from "../utils/supabase";
+import { insertSearch } from "../utils/supabase";
 import SearchHistory from "../components/SearchHistory";
 
 export default function Searchscreen({ navigation }) {

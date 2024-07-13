@@ -8,7 +8,6 @@ import { useState, useEffect } from "react";
 import { supabase } from "./utils/supabase";
 import Account from "./components/Account";
 import Auth from "./components/Auth";
-import { Session } from "@supabase/supabase-js";
 import { Ionicons } from "@expo/vector-icons";
 import { themecolors } from "./theme/themecolors";
 import Searchscreen from "./screens/Searchscreen";
@@ -19,13 +18,12 @@ const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  
   const [session, setSession] = useState(null);
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
     });
-    
+
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
@@ -69,10 +67,13 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView className="flex-1" style={{backgroundColor: themecolors.bg}}>
+    <SafeAreaView
+      className="flex-1"
+      style={{ backgroundColor: themecolors.bg }}
+    >
       <StatusBar barStyle="light-content" backgroundColor={themecolors.bg} />
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false}}>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Homestack" component={Homestack} />
           <Stack.Screen
             name="Search"

@@ -1,7 +1,6 @@
 import { View, Text, Image } from "react-native";
 import React from "react";
 import Player from "../components/Player";
-import { useNavigation } from "@react-navigation/native";
 import { themecolors } from "../theme/themecolors";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { formatViews } from "../utils/numbers";

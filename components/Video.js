@@ -3,7 +3,7 @@ import React from "react";
 import { Entypo } from "@expo/vector-icons";
 import { formatViews } from "../utils/numbers";
 import { useNavigation } from "@react-navigation/native";
-import { insertWatched, supabase } from "../utils/supabase";
+import { insertWatched } from "../utils/supabase";
 
 export default function Video({ item, index }) {
   const navigation = useNavigation();
@@ -14,7 +14,7 @@ export default function Video({ item, index }) {
       item: item,
     });
   };
-  
+
   return (
     <Pressable onPress={handleClick}>
       <Image source={{ uri: item.thumbnail[0].url }} className="h-52 w-full" />
