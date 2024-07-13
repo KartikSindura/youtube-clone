@@ -10,6 +10,8 @@ import Video from "../components/Video";
 import Loading from "../components/Loading";
 import { fetchSearchedVideos } from "../api/youtube";
 import { toggleApi } from "../utils/toggleApis";
+import { insertSearch, supabase } from "../utils/supabase";
+import SearchHistory from "../components/SearchHistory";
 
 export default function Searchscreen({ navigation }) {
   const inputRef = useRef();
@@ -18,24 +20,24 @@ export default function Searchscreen({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [videos, setVideos] = useState(dummy_search.data);
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     // This function will run every time the screen comes into focus
-  //     const resetState = () => {
-  //       setInput(null);
-  //       setShowSearchResults(false);
-  //       setLoading(false);
-  //       setVideos(dummy_search.data);
-  //     };
+  // const insertSearch = async (input) => {
+  //   const { data: { user } } = await supabase.auth.getUser();
+  //   if (!user) {
+  //     console.log("User not authenticated");
+  //     return;
+  //   }
 
-  //     resetState();
+  //   try {
+  //     const { data, error } = await supabase
+  //       .from("searches")
+  //       .insert({ query: input, user_id: user.id });
 
-  //     // Return a cleanup function (optional)
-  //     return () => {
-  //       // Any cleanup code if needed
-  //     };
-  //   }, [])
-  // );
+  //     if (error) throw error;
+  //     console.log("Search inserted: ", data);
+  //   } catch (error) {
+  //     console.error("Error inserting search:", error.message);
+  //   }
+  // };
 
   const fetchSearchedData = async () => {
     try {
@@ -69,12 +71,8 @@ export default function Searchscreen({ navigation }) {
         </ScrollView>
       );
     }
-
-    return (
-      <View>
-        <Text className="text-white">history here</Text>
-      </View>
-    );
+    console.log("show");
+    return <SearchHistory />;
   };
 
   return (
@@ -105,7 +103,12 @@ export default function Searchscreen({ navigation }) {
               setInput(text);
             }}
             onSubmitEditing={async () => {
-              await fetchSearchedData();
+              if (input === "" || input === null) {
+                navigation.navigate("Home");
+              } else {
+                await insertSearch(input);
+                await fetchSearchedData();
+              }
               // setShowSearchResults(true);
             }}
           />

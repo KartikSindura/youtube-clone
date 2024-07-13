@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
-import { supabase } from "../utils/supabase"
-import { StyleSheet, View, Alert } from "react-native";
+import { supabase } from "../utils/supabase";
+import { StyleSheet, View, Alert, Image, Text, Pressable } from "react-native";
 import { Button, Input } from "@rneui/themed";
 import { Session } from "@supabase/supabase-js";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { themecolors } from "../theme/themecolors";
 
 export default function Account({ session }) {
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
   const [website, setWebsite] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState(require("../assets/ayano2.jpeg"));
 
   useEffect(() => {
     if (session) getProfile();
@@ -21,7 +23,7 @@ export default function Account({ session }) {
 
       const { data, error, status } = await supabase
         .from("profiles")
-        .select(`username, website, avatar_url`)
+        .select(`username, website`) // avatar_url
         .eq("id", session?.user.id)
         .single();
       if (error && status !== 406) {
@@ -31,7 +33,7 @@ export default function Account({ session }) {
       if (data) {
         setUsername(data.username);
         setWebsite(data.website);
-        setAvatarUrl(data.avatar_url);
+        // setAvatarUrl(data.avatar_url);
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -42,7 +44,8 @@ export default function Account({ session }) {
     }
   }
 
-  async function updateProfile({ username, website, avatar_url }) {
+  async function updateProfile({ username, website }) {
+    // avatar_url
     try {
       setLoading(true);
       if (!session?.user) throw new Error("No user on the session!");
@@ -51,7 +54,7 @@ export default function Account({ session }) {
         id: session?.user.id,
         username,
         website,
-        avatar_url,
+        // avatar_url,
         updated_at: new Date(),
       };
 
@@ -68,55 +71,76 @@ export default function Account({ session }) {
       setLoading(false);
     }
   }
-
   return (
-    <View style={styles.container}>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Input label="Email" value={session?.user?.email} disabled />
+    <SafeAreaView
+      style={{ backgroundColor: themecolors.bg }}
+      className="flex-1"
+    >
+      <View className="p-3">
+        <Image source={avatarUrl} className="rounded-full h-20 w-20" />
+        <Text className="text-white text-lg font-bold">{username}</Text>
       </View>
-      <View style={styles.verticallySpaced}>
-        <Input
-          label="Username"
-          value={username || ""}
-          onChangeText={(text) => setUsername(text)}
-        />
+      <View>
+        <Pressable
+          className="items-center p-3 rounded-lg"
+          onPress={() => supabase.auth.signOut()}
+          style={{backgroundColor: themecolors.categories}}
+        >
+          <Text className="text-white font-semibold text-lg">Sign out</Text>
+        </Pressable>
       </View>
-      <View style={styles.verticallySpaced}>
-        <Input
-          label="Website"
-          value={website || ""}
-          onChangeText={(text) => setWebsite(text)}
-        />
-      </View>
-
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Button
-          title={loading ? "Loading ..." : "Update"}
-          onPress={() =>
-            updateProfile({ username, website, avatar_url: avatarUrl })
-          }
-          disabled={loading}
-        />
-      </View>
-
-      <View style={styles.verticallySpaced}>
-        <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
-      </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 40,
-    padding: 12,
-  },
-  verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
-    alignSelf: "stretch",
-  },
-  mt20: {
-    marginTop: 20,
-  },
-});
+//   return (
+//     <View style={styles.container}>
+//       <View style={[styles.verticallySpaced, styles.mt20]}>
+//         <Input label="Email" value={session?.user?.email} disabled />
+//       </View>
+//       <View style={styles.verticallySpaced}>
+//         <Input
+//           label="Username"
+//           value={username || ""}
+//           onChangeText={(text) => setUsername(text)}
+//         />
+//       </View>
+//       <View style={styles.verticallySpaced}>
+//         <Input
+//           label="Website"
+//           value={website || ""}
+//           onChangeText={(text) => setWebsite(text)}
+//         />
+//       </View>
+
+//       <View style={[styles.verticallySpaced, styles.mt20]}>
+//         <Button
+//           title={loading ? "Loading ..." : "Update"}
+//           onPress={() =>
+//             updateProfile({ username, website, avatar_url: avatarUrl })
+//           }
+//           disabled={loading}
+//         />
+//       </View>
+
+//       <View style={styles.verticallySpaced}>
+//         <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
+//       </View>
+//     </View>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     marginTop: 40,
+//     padding: 12,
+//   },
+//   verticallySpaced: {
+//     paddingTop: 4,
+//     paddingBottom: 4,
+//     alignSelf: "stretch",
+//   },
+//   mt20: {
+//     marginTop: 20,
+//   },
+// });

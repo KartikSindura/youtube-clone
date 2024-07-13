@@ -23,7 +23,7 @@ export default function Playerscreen({ route }) {
             : item.title}
         </Text>
         <Text className="text-zinc-400 text-xs mb-4">
-          {formatViews(item.viewCount)} views {item.publishedText}
+          {formatViews(item.viewCount)} views   {item.publishedText}
         </Text>
         <View className="flex-row items-center space-x-3 mb-5">
           <Image

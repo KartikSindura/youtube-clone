@@ -19,6 +19,7 @@ const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  
   const [session, setSession] = useState(null);
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
