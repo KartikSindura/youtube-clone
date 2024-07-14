@@ -1,4 +1,4 @@
-import { View, TextInput, Pressable, Text, ScrollView } from "react-native";
+import { View, TextInput, Pressable, Text, ScrollView, Keyboard } from "react-native";
 import React, { useRef, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -39,6 +39,7 @@ export default function Searchscreen({ navigation }) {
     } catch (error) {
       console.error("API failed:", error);
     } finally {
+      Keyboard.dismiss()
       setLoading(false);
       setShowSearchResults(true);
     }

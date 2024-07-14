@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  ActivityIndicator,
   FlatList,
   Pressable,
 } from "react-native";
@@ -75,6 +74,7 @@ export default function SearchHistory({ onSearchSelect }) {
           data={searches}
           renderItem={renderSearchItem}
           keyExtractor={(item) => item.search_id.toString()}
+          keyboardShouldPersistTaps='handled'
         />
       ) : (
         <View className="items-center justify-center p-5">

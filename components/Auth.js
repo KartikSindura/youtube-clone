@@ -12,7 +12,6 @@ import { Input } from "@rneui/themed";
 import { themecolors } from "../theme/themecolors";
 import { createAvatar } from "@dicebear/core";
 import { lorelei } from "@dicebear/collection";
-import { useNavigation } from "@react-navigation/native";
 
 // Tells Supabase Auth to continuously refresh the session automatically if
 // the app is in the foreground. When this is added, you will continue to receive

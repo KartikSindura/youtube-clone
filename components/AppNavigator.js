@@ -9,8 +9,6 @@ import Auth from "../components/Auth";
 import Searchscreen from "../screens/Searchscreen";
 import Playerscreen from "../screens/Playerscreen";
 import { themecolors } from "../theme/themecolors";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { SvgXml } from "react-native-svg";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 
