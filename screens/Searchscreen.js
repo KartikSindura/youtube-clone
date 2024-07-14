@@ -78,7 +78,7 @@ export default function Searchscreen({ navigation }) {
         <View className="flex-1">
           <TextInput
             autoFocus
-            className="text-white bg-[#212121] pl-3 rounded-3xl h-8"
+            className="text-white bg-[#212121] px-3 rounded-3xl h-8"
             placeholder="Search YouTube"
             ref={inputRef}
             onLayout={() => inputRef.current.focus()}
@@ -99,9 +99,9 @@ export default function Searchscreen({ navigation }) {
             }}
           />
         </View>
-        <View className="rounded-full h-8 w-8 bg-[#212121] items-center justify-center">
+        {/* <View className="rounded-full h-8 w-8 bg-[#212121] items-center justify-center">
           <MaterialIcons name="mic" size={24} color="white" />
-        </View>
+        </View> */}
       </View>
       {/* Results */}
       {check()}

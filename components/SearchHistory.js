@@ -3,6 +3,7 @@ import {
   Text,
   FlatList,
   Pressable,
+  ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { getSearchHistory } from "../utils/supabase";
@@ -68,7 +69,7 @@ export default function SearchHistory({ onSearchSelect }) {
   }
 
   return (
-    <View>
+    <View className="flex-1">
       {searches && searches.length > 0 ? (
         <FlatList
           data={searches}

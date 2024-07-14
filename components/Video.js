@@ -10,7 +10,6 @@ export default function Video({ item, index }) {
   const navigation = useNavigation();
 
   const handleClick = async () => {
-    await insertWatched(item.videoId);
     navigation.navigate("Player", {
       item: item,
     });
