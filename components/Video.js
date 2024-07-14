@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { insertWatched } from "../utils/supabase";
 
 export default function Video({ item, index }) {
+  // console.log(item.thumbnail.length - 1)
   const navigation = useNavigation();
 
   const handleClick = async () => {
@@ -17,7 +18,7 @@ export default function Video({ item, index }) {
 
   return (
     <Pressable onPress={handleClick}>
-      <Image source={{ uri: item.thumbnail[0].url }} className="h-52 w-full" />
+      <Image source={{ uri: item.thumbnail[item.thumbnail.length - 1].url }} className="h-52 w-full" />
       <View className="flex items-end mr-2 mb-5 -mt-6">
         <View className="bg-black rounded px-1">
           <Text className="text-white font-semibold text-xs">
@@ -27,7 +28,7 @@ export default function Video({ item, index }) {
       </View>
       <View className="flex-row justify-between items-center pb-5 space-x-3 mx-2">
         <Image
-          source={{ uri: item.channelThumbnail[0].url }}
+          source={{ uri: item.channelThumbnail[item.channelThumbnail.length - 1].url }}
           className="h-9 w-9 rounded-full"
         />
         <View className="flex-1 space-y-1">
