@@ -19,26 +19,13 @@ export default function Searchscreen({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [videos, setVideos] = useState(dummy_search.data);
 
-  // const insertSearch = async (input) => {
-  //   const { data: { user } } = await supabase.auth.getUser();
-  //   if (!user) {
-  //     console.log("User not authenticated");
-  //     return;
-  //   }
+  const handleSearchSelect = async (input) => {
+    console.log(input)
+    setInput(input)
+    await fetchSearchedData(input)
+  }
 
-  //   try {
-  //     const { data, error } = await supabase
-  //       .from("searches")
-  //       .insert({ query: input, user_id: user.id });
-
-  //     if (error) throw error;
-  //     console.log("Search inserted: ", data);
-  //   } catch (error) {
-  //     console.error("Error inserting search:", error.message);
-  //   }
-  // };
-
-  const fetchSearchedData = async () => {
+  const fetchSearchedData = async (input) => {
     try {
       if (toggleApi.search) {
         setLoading(true);
@@ -70,7 +57,7 @@ export default function Searchscreen({ navigation }) {
         </ScrollView>
       );
     }
-    return <SearchHistory />;
+    return <SearchHistory onSearchSelect={handleSearchSelect}/>;
   };
 
   return (
@@ -105,7 +92,7 @@ export default function Searchscreen({ navigation }) {
                 navigation.navigate("Home");
               } else {
                 await insertSearch(input);
-                await fetchSearchedData();
+                await fetchSearchedData(input);
               }
               // setShowSearchResults(true);
             }}

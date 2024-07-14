@@ -3,15 +3,15 @@ import React from "react";
 
 export default function Loading() {
   return (
-    <View>
-      <ActivityIndicator size="large" color={"blue"} />
+    <View style={[styles.container, styles.horizontal]}>
+      <ActivityIndicator size="large" color={"white"} />
     </View>
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    // justifyContent: "center",
   },
   horizontal: {
     flexDirection: "row",

@@ -1,5 +1,5 @@
 // AppNavigator.js
-import React from 'react';
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
@@ -9,11 +9,16 @@ import Auth from "../components/Auth";
 import Searchscreen from "../screens/Searchscreen";
 import Playerscreen from "../screens/Playerscreen";
 import { themecolors } from "../theme/themecolors";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { SvgXml } from "react-native-svg";
+import { AntDesign } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 function HomeTabs({ session }) {
+    // console.log(session.user.aud)
   return (
     <Tab.Navigator
       screenOptions={{
@@ -30,7 +35,7 @@ function HomeTabs({ session }) {
         component={Homescreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, focused }) =>
+          tabBarIcon: ({  focused }) =>
             focused ? (
               <Ionicons name="home" size={24} color="white" />
             ) : (
@@ -39,9 +44,19 @@ function HomeTabs({ session }) {
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name={session && session.user ? "You" : "Sign in"}
         component={session && session.user ? Account : Auth}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+          tabBarIcon: () =>
+            session && session.user ? (
+              <AntDesign name="user" size={24} color="white" />
+            //   <SvgXml xml={session.user.user_metadata.avatarurl}/> // PERFORMANCE ISSUES
+
+            ) : (
+              <MaterialIcons name="login" size={24} color="white" />
+            ),
+        }}
       />
     </Tab.Navigator>
   );

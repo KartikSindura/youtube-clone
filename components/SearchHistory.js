@@ -1,9 +1,16 @@
-import { View, Text, ActivityIndicator, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  FlatList,
+  Pressable,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { getSearchHistory } from "../utils/supabase";
 import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
+import Loading from "./Loading";
 
-export default function SearchHistory() {
+export default function SearchHistory({ onSearchSelect }) {
   const [searches, setSearches] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,7 +22,7 @@ export default function SearchHistory() {
         setSearches(data || []);
       } catch (err) {
         setError(err.message);
-        setSearches([])
+        setSearches([]);
       } finally {
         setLoading(false);
       }
@@ -25,29 +32,32 @@ export default function SearchHistory() {
   }, []);
 
   const renderSearchItem = ({ item }) => (
-    <View className="p-4">
+    <Pressable
+      className="p-4"
+      onPress={() => {
+        onSearchSelect(item.query);
+      }}
+    >
       <View className="flex-row items-center">
         <View className="text-2xl mr-4">
           <MaterialCommunityIcons name="history" size={24} color="white" />
         </View>
         <View className="flex-grow flex-1">
           <Text className="text-white">
-            {item.query.length > 90 ? item.query.slice(0, 90) + "..." : item.query}
+            {item.query.length > 90
+              ? item.query.slice(0, 90) + "..."
+              : item.query}
           </Text>
         </View>
         <View>
           <Feather name="arrow-up-left" size={24} color="white" />
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 
   if (loading) {
-    return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator size="large" color="white" />
-      </View>
-    );
+    return <Loading />;
   }
 
   if (error) {

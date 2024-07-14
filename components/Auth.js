@@ -12,6 +12,7 @@ import { Input } from "@rneui/themed";
 import { themecolors } from "../theme/themecolors";
 import { createAvatar } from "@dicebear/core";
 import { lorelei } from "@dicebear/collection";
+import { useNavigation } from "@react-navigation/native";
 
 // Tells Supabase Auth to continuously refresh the session automatically if
 // the app is in the foreground. When this is added, you will continue to receive
@@ -38,7 +39,7 @@ export default function Auth() {
       seed: Math.random().toString(36).slice(2, 7),
       // ... other options
     }).toString();
-    return avatar
+    return avatar;
   };
 
   async function signInWithEmail() {
@@ -164,7 +165,9 @@ export default function Auth() {
           <View style={[styles.verticallySpaced, styles.mt20]} className="p-3">
             <Pressable
               disabled={loading}
-              onPress={() => signInWithEmail()}
+              onPress={() => {
+                signInWithEmail();
+              }}
               style={{ backgroundColor: themecolors.categories }}
               className="items-center p-3 rounded-lg"
             >

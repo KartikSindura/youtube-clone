@@ -99,7 +99,7 @@ export default function Homescreen({ navigation }) {
           {/* <Video item={videos[0]} key={9999}/> */}
 
           {/* shorts */}
-          <View className="mt-2">
+          {/* <View className="mt-2">
             <View className="mx-3 flex-row items-center space-x-2">
               <Image
                 source={require("../assets/youtube-shorts-icon.png")}
@@ -118,7 +118,7 @@ export default function Homescreen({ navigation }) {
               numColumns={2}
               scrollEnabled={false}
             ></FlatList>
-          </View>
+          </View> */}
 
           {/* videos */}
           {/* <View>
