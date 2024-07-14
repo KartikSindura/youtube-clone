@@ -25,6 +25,10 @@ export default function Searchscreen({ navigation }) {
     await fetchSearchedData(input)
   }
 
+  const handleCopyButton = (input) => {
+    setInput(input)
+  }
+
   const fetchSearchedData = async (input) => {
     try {
       if (toggleApi.search) {
@@ -58,7 +62,7 @@ export default function Searchscreen({ navigation }) {
         </ScrollView>
       );
     }
-    return <SearchHistory onSearchSelect={handleSearchSelect}/>;
+    return <SearchHistory onSearchSelect={handleSearchSelect} onPressCopyButton={handleCopyButton}/>;
   };
 
   return (

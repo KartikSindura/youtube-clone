@@ -13,18 +13,6 @@ import { themecolors } from "../theme/themecolors";
 import { createAvatar } from "@dicebear/core";
 import { lorelei } from "@dicebear/collection";
 
-// Tells Supabase Auth to continuously refresh the session automatically if
-// the app is in the foreground. When this is added, you will continue to receive
-// `onAuthStateChange` events with the `TOKEN_REFRESHED` or `SIGNED_OUT` event
-// if the user's session is terminated. This should only be registered once.
-AppState.addEventListener("change", (state) => {
-  if (state === "active") {
-    supabase.auth.startAutoRefresh();
-  } else {
-    supabase.auth.stopAutoRefresh();
-  }
-});
-
 export default function Auth() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -32,14 +20,6 @@ export default function Auth() {
   // const [avatar_url, setAvatarUrl] = useState();
   const [loading, setLoading] = useState(false);
   const [signUpInstead, setSignUpInstead] = useState(false);
-
-  const makeAvatar = () => {
-    const avatar = createAvatar(lorelei, {
-      seed: Math.random().toString(36).slice(2, 7),
-      // ... other options
-    }).toString();
-    return avatar;
-  };
 
   async function signInWithEmail() {
     setLoading(true);
@@ -53,26 +33,44 @@ export default function Auth() {
   }
 
   async function signUpWithEmail() {
-    setLoading(true);
-    const avatar_url = makeAvatar();
+    const seed = Math.random().toString(36).slice(2, 7);
+    const avatarSvg = createAvatar(lorelei, {
+      seed: seed,
+      // ... other options
+    }).toString();
+
+    const tempFileName = `temp_${new Date().getTime()}.svg`;
+    const { data, error } = await supabase.storage
+      .from("avatars")
+      .upload(tempFileName, avatarSvg, {
+        contentType: "image/svg+xml",
+        upsert: true,
+      });
+
+    if (error) {
+      console.error("Error uploading avatar:", error);
+      return null;
+    }
+
     const {
-      data: { session },
-      error,
-    } = await supabase.auth.signUp({
+      data: { publicUrl },
+    } = supabase.storage.from("avatars").getPublicUrl(tempFileName);
+
+    const { data: userData, error: signUpError } = await supabase.auth.signUp({
       email: email,
       password: password,
       options: {
         data: {
           username: username,
-          avatarurl: avatar_url,
+          avatarurl: publicUrl,
         },
       },
     });
 
-    if (error) Alert.alert(error.message);
-    // insertProfile();
-    // if (!session) Alert.alert('Please check your inbox for email verification!')
-    setLoading(false);
+    if (signUpError) {
+      console.error("Error signing up:", signUpError);
+      return null;
+    }
   }
 
   return (

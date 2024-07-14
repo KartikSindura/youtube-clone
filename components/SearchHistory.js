@@ -10,7 +10,7 @@ import { getSearchHistory } from "../utils/supabase";
 import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 import Loading from "./Loading";
 
-export default function SearchHistory({ onSearchSelect }) {
+export default function SearchHistory({ onSearchSelect, onPressCopyButton }) {
   const [searches, setSearches] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -49,9 +49,11 @@ export default function SearchHistory({ onSearchSelect }) {
               : item.query}
           </Text>
         </View>
-        <View>
+        <Pressable onPress={() => {
+          onPressCopyButton(item.query)
+        }}>
           <Feather name="arrow-up-left" size={24} color="white" />
-        </View>
+        </Pressable>
       </View>
     </Pressable>
   );

@@ -11,12 +11,14 @@ import Playerscreen from "../screens/Playerscreen";
 import { themecolors } from "../theme/themecolors";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import { Image } from "react-native";
+import { SvgUri } from "react-native-svg";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 function HomeTabs({ session }) {
-    // console.log(session.user.aud)
+  // console.log(session.user.user_metadata.avatarurl)
   return (
     <Tab.Navigator
       screenOptions={{
@@ -33,7 +35,7 @@ function HomeTabs({ session }) {
         component={Homescreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({  focused }) =>
+          tabBarIcon: ({ focused }) =>
             focused ? (
               <Ionicons name="home" size={24} color="white" />
             ) : (
@@ -49,8 +51,8 @@ function HomeTabs({ session }) {
           tabBarIcon: () =>
             session && session.user ? (
               <AntDesign name="user" size={24} color="white" />
-            //   <SvgXml xml={session.user.user_metadata.avatarurl}/> // PERFORMANCE ISSUES
-
+              //   <SvgXml xml={session.user.user_metadata.avatarurl}/> // PERFORMANCE ISSUES
+              // <SvgUri uri={session.user.user_metadata.avatarurl} /> // ALSO PERFORMANCE ISSUES !???? ???
             ) : (
               <MaterialIcons name="login" size={24} color="white" />
             ),

@@ -37,7 +37,7 @@ export const insertSearch = async (input) => {
   }
 };
 
-export const insertWatched = async (videoId) => {
+export const insertWatched = async (videoId, videoTitle, channelTitle, videoThumbnail) => {
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -49,6 +49,9 @@ export const insertWatched = async (videoId) => {
   try {
     const { data, error } = await supabase.from("watched").insert({
       video_id: videoId,
+      video_title: videoTitle,
+      channel_title: channelTitle,
+      video_thumbnail: videoThumbnail,
       user_id: user.id, // Add the user's ID to the watched record
     });
 
@@ -82,6 +85,7 @@ export const getSearchHistory = async () => {
     throw error;
   }
 };
+
 
 // export const getAdditionalMetaData = async () => {
 
