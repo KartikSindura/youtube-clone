@@ -1,4 +1,11 @@
-import { View, TextInput, Pressable, Text, ScrollView, Keyboard } from "react-native";
+import {
+  View,
+  TextInput,
+  Pressable,
+  Text,
+  ScrollView,
+  Keyboard,
+} from "react-native";
 import React, { useRef, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -20,14 +27,14 @@ export default function Searchscreen({ navigation }) {
   const [videos, setVideos] = useState(dummy_search.data);
 
   const handleSearchSelect = async (input) => {
-    console.log(input)
-    setInput(input)
-    await fetchSearchedData(input)
-  }
+    console.log(input);
+    setInput(input);
+    await fetchSearchedData(input);
+  };
 
   const handleCopyButton = (input) => {
-    setInput(input)
-  }
+    setInput(input);
+  };
 
   const fetchSearchedData = async (input) => {
     try {
@@ -43,7 +50,7 @@ export default function Searchscreen({ navigation }) {
     } catch (error) {
       console.error("API failed:", error);
     } finally {
-      Keyboard.dismiss()
+      Keyboard.dismiss();
       setLoading(false);
       setShowSearchResults(true);
     }
@@ -55,14 +62,28 @@ export default function Searchscreen({ navigation }) {
     }
 
     if (showSearchResults) {
-      return (
-        <ScrollView showsVerticalScrollIndicator={false} className="mt-2">
-          {videos &&
-            videos.map((item, index) => <Video item={item} key={index} />)}
-        </ScrollView>
-      );
+      if (videos.length == 0) {
+        return (
+          <View className="items-center flex-1 mt-5">
+            <Text className="text-white">No videos found</Text>
+          </View>
+        );
+      } else {
+        return (
+          <ScrollView showsVerticalScrollIndicator={false} className="mt-2">
+            {videos &&
+              videos.map((item, index) => <Video item={item} key={index} />)}
+          </ScrollView>
+        );
+      }
     }
-    return <SearchHistory onSearchSelect={handleSearchSelect} onPressCopyButton={handleCopyButton}/>;
+
+    return (
+      <SearchHistory
+        onSearchSelect={handleSearchSelect}
+        onPressCopyButton={handleCopyButton}
+      />
+    );
   };
 
   return (
@@ -96,7 +117,7 @@ export default function Searchscreen({ navigation }) {
               if (input === "" || input === null || input === " ") {
                 navigation.navigate("Home");
               } else {
-                setInput(input.trim())
+                setInput(input.trim());
                 await insertSearch(input);
                 await fetchSearchedData(input);
               }
