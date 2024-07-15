@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "You2ube",
-    "slug": "You2ube",
+    "slug": "youtube-clone",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/adaptive-icon.png",
