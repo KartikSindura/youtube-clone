@@ -3,19 +3,8 @@ import React from "react";
 
 export default function Loading() {
   return (
-    <View style={[styles.container, styles.horizontal]}>
+    <View className="h-screen justify-center items-center">
       <ActivityIndicator size="large" color={"white"} />
     </View>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // justifyContent: "center",
-  },
-  horizontal: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    padding: 10,
-  },
-});
