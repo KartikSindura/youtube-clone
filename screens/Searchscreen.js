@@ -93,9 +93,10 @@ export default function Searchscreen({ navigation }) {
               setInput(text);
             }}
             onSubmitEditing={async () => {
-              if (input === "" || input === null) {
+              if (input === "" || input === null || input === " ") {
                 navigation.navigate("Home");
               } else {
+                setInput(input.trim())
                 await insertSearch(input);
                 await fetchSearchedData(input);
               }
