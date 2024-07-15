@@ -13,11 +13,9 @@ import { themecolors } from "../theme/themecolors";
 import { Fontisto, AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { dummy, shorts } from "../const";
 import { useState } from "react";
-import Short from "../components/Short";
 import Video from "../components/Video";
 import { fetchSuggestedVideos } from "../api/youtube";
 import Loading from "../components/Loading";
-import Categories from "../components/Categories";
 import { toggleApi } from "../utils/toggleApis";
 
 export default function Homescreen({ navigation }) {
@@ -31,7 +29,7 @@ export default function Homescreen({ navigation }) {
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
-    }, 1500);
+    }, 200);
     dataFetched.current = false;
     await fetchData();
   }, []);
@@ -77,9 +75,10 @@ export default function Homescreen({ navigation }) {
         {/* <Player /> */}
         <SafeAreaView className="flex-row justify-between mx-3 mt-2">
           <View className="flex-row items-center space-x-1">
-            <Fontisto name="youtube-play" size={18} color={themecolors.ytred} />
+            {/* <Fontisto name="youtube-play" size={18} color={themecolors.ytred} /> */}
+            <Image source={require("../assets/adaptive-icon.png")} className="h-12 w-12"/>
             <Text className="text-white font-bold text-xl tracking-tighter">
-              YouTube
+              You2ube
             </Text>
           </View>
           <View className="flex-row items-center space-x-6">
@@ -91,7 +90,7 @@ export default function Homescreen({ navigation }) {
         </SafeAreaView>
 
         <ScrollView
-          className="flex-1 mt-4"
+          className="flex-1"
           showsVerticalScrollIndicator={false}
         >
           {/* <Categories /> */}

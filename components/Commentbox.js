@@ -108,7 +108,7 @@ export default function Commentbox({ videoId }) {
               {commentData.data &&
                 commentData.data.map((item, index) => {
                   return (
-                    <View className="flex-col mb-7">
+                    <View className="flex-col mb-7" key={index}>
                       <View className="flex-row space-x-3 ">
                         <Image
                           source={{
