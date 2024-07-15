@@ -1,6 +1,6 @@
 # YouTube Clone
 
-This project is a YouTube clone application built to mimic the core features and functionalities of the popular video-sharing platform. It is designed using modern web development technologies to provide an engaging and responsive user experience.
+This project is a YouTube clone application built to mimic the core features and functionalities of the popular video-sharing platform. It is designed using modern app development technologies to provide an engaging and responsive user experience.
 
 ## Table of Contents
 - [Features](#features)
@@ -35,6 +35,6 @@ This project is a YouTube clone application built to mimic the core features and
   - Expo
 
 ## Contact
-Kartik Sindura - [Your Email](mailto:kartik.sindura@gmail.com)
+Kartik Sindura - [kartik.sindura@gmail.com](mailto:kartik.sindura@gmail.com)
 
 Project Link: [https://github.com/KartikSindura/youtube-clone](https://github.com/KartikSindura/youtube-clone)
