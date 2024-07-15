@@ -94,7 +94,7 @@ export default function Homescreen({ navigation }) {
           className="flex-1 mt-4"
           showsVerticalScrollIndicator={false}
         >
-          <Categories />
+          {/* <Categories /> */}
           {/* TODO: suggested video here */}
           {/* <Video item={videos[0]} key={9999}/> */}
 
