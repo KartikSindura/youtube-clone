@@ -82,7 +82,7 @@ export default function Homescreen({ navigation }) {
             </Text>
           </View>
           <View className="flex-row items-center space-x-6">
-            <AntDesign name="videocamera" size={24} color="white" />
+            {/* <AntDesign name="videocamera" size={24} color="white" /> */}
             <Pressable onPress={handleSearch}>
               <MaterialIcons name="search" size={28} color="white" />
             </Pressable>
