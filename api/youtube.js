@@ -10,7 +10,7 @@ export const fetchSuggestedVideos = async (params) => {
       ...params,
     },
     headers: {
-      "x-rapidapi-key": `${process.env.RAPID_API_KEY}`,
+      "x-rapidapi-key": process.env.RAPID_API_KEY,
       "x-rapidapi-host": "youtube-v3-alternative.p.rapidapi.com",
     },
   };
@@ -34,7 +34,7 @@ export const fetchSearchedVideos = async (query) => {
       type: "video",
     },
     headers: {
-      "x-rapidapi-key": `${process.env.RAPID_API_KEY}`,
+      "x-rapidapi-key": process.env.RAPID_API_KEY,
       "x-rapidapi-host": "youtube-v3-alternative.p.rapidapi.com",
     },
   };
@@ -57,7 +57,7 @@ export const fetchComments = async (query) => {
       sort_by: 'top'
     },
     headers: {
-      'x-rapidapi-key': `${process.env.RAPID_API_KEY}`,
+      'x-rapidapi-key': process.env.RAPID_API_KEY,
       'x-rapidapi-host': 'youtube-v3-alternative.p.rapidapi.com'
     }
   };

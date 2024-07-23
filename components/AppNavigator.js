@@ -51,9 +51,9 @@ function HomeTabs({ session }) {
           tabBarIcon: () =>
             session && session.user ? (
               <AntDesign name="user" size={24} color="white" />
+            ) : (
               //   <SvgXml xml={session.user.user_metadata.avatarurl}/> // PERFORMANCE ISSUES
               // <SvgUri uri={session.user.user_metadata.avatarurl} /> // ALSO PERFORMANCE ISSUES !???? ???
-            ) : (
               <MaterialIcons name="login" size={24} color="white" />
             ),
         }}
